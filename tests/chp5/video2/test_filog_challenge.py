@@ -41,14 +41,18 @@ def test_add_invalid_activity(create_tracker, create_overlapping_times):
 
     assert str(exp.value) == ('A new activity must not conflict with a logged activity. ' +
                               'Please delete the old activity before proceeding')
-"""
- TO DO: Add a new test.
- You can run the following to expose which test functions
- and paths are covered:
-
- pytest --cov scripts
-"""
 
 
-def test_function():  # change function name here
-    pass
+def test_delete_activity(create_tracker):
+    fitness_tracker = create_tracker
+
+    activities = fitness_tracker.get_activities()
+    assert len(activities) == 1
+
+    activity = activities[0][0]
+    start_time = activities[0][1]
+    end_time = activities[0][2]
+    fitness_tracker.delete_activity(activity, start_time, end_time)
+
+    activities = fitness_tracker.get_activities()
+    assert len(activities) == 0
